@@ -43,6 +43,21 @@ class RailwayAgentBeatsHandler(BaseHTTPRequestHandler):
             self.end_headers()
             response = {"status": "healthy", "timestamp": time.time()}
             self.wfile.write(json.dumps(response).encode())
+        elif self.path == '/launcher':
+            # Launcher endpoint for AgentBeats.org
+            self.send_response(200)
+            self.send_header('Content-type', 'application/json')
+            self.send_header('Access-Control-Allow-Origin', '*')
+            self.end_headers()
+            response = {
+                "status": "ready",
+                "launcher": True,
+                "agent_type": self.agent_type,
+                "name": "SciCode Agent Beats Launcher",
+                "capabilities": ["reset", "orchestration", "evaluation", "scientific", "a2a"],
+                "version": "1.0.0"
+            }
+            self.wfile.write(json.dumps(response).encode())
         else:
             self.send_response(404)
             self.end_headers()
@@ -58,15 +73,28 @@ class RailwayAgentBeatsHandler(BaseHTTPRequestHandler):
             else:
                 data = {}
             
-            # A2A Protocol response following AgentBeats specifications
-            response = {
-                "status": "success",
-                "agent_type": self.agent_type,
-                "message": "SciCode Agent Beats ready for orchestration",
-                "capabilities": ["orchestration", "evaluation", "scientific", "a2a"],
-                "timestamp": time.time(),
-                "agent_name": "SciCode Agent Beats"
-            }
+            # Check if this is a launcher request
+            if self.path == '/launcher':
+                # Launcher reset/control endpoint
+                response = {
+                    "status": "success",
+                    "launcher": True,
+                    "agent_type": self.agent_type,
+                    "message": "SciCode Agent Beats launcher ready for reset",
+                    "capabilities": ["reset", "orchestration", "evaluation", "scientific", "a2a"],
+                    "timestamp": time.time(),
+                    "agent_name": "SciCode Agent Beats Launcher"
+                }
+            else:
+                # Regular agent endpoint
+                response = {
+                    "status": "success",
+                    "agent_type": self.agent_type,
+                    "message": "SciCode Agent Beats ready for orchestration",
+                    "capabilities": ["orchestration", "evaluation", "scientific", "a2a"],
+                    "timestamp": time.time(),
+                    "agent_name": "SciCode Agent Beats"
+                }
             
             self.send_response(200)
             self.send_header('Content-type', 'application/json')

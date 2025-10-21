@@ -1,0 +1,13 @@
+# Railway.app requirements for SciCode Agent Beats
+# Minimal dependencies for AgentBeats A2A protocol
+
+# Core dependencies
+fastapi==0.119.1
+uvicorn==0.38.0
+httpx==0.28.1
+
+# Optional: Add SciCode dependencies if needed
+# numpy
+# scipy
+# matplotlib
+# sympy

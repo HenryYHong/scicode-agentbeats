@@ -1,13 +1,31 @@
-# Railway.app requirements for SciCode Agent Beats
-# Minimal dependencies for AgentBeats A2A protocol
+# AgentBeats A2A Protocol Dependencies
+# Required for SciCodeAgent.py, scicode_green_agent.py, and white_agent_scicode.py
 
-# Core dependencies
-fastapi==0.119.1
-uvicorn==0.38.0
-httpx==0.28.1
+# Core A2A protocol dependencies
+# NOTE: The correct a2a package is a2a-sdk from Google, which requires Python 3.10+
+# Install from: pip install git+https://github.com/google/a2a-python.git
+# OR if available on PyPI: pip install a2a-sdk
+# For Python 3.9, you may need to upgrade Python or use a virtual environment with Python 3.10+
+a2a-sdk>=0.1.0; python_version >= "3.10"  # Agent-to-Agent protocol library (requires Python 3.10+)
+uvicorn==0.38.0  # ASGI server for A2AStarletteApplication
+httpx==0.28.1  # HTTP client for A2A communication
 
-# Optional: Add SciCode dependencies if needed
-# numpy
-# scipy
-# matplotlib
-# sympy
+# Configuration and utilities
+python-dotenv>=1.0.0  # Environment variables (imported as 'dotenv')
+
+# TOML parsing
+# Note: 'tomllib' is built into Python 3.11+, use 'tomli' for older versions
+tomli>=2.0.0; python_version < "3.11"  # TOML parser for Python < 3.11
+
+# SciCode dataset dependencies
+datasets>=2.0.0  # HuggingFace datasets for loading SciCode problems
+h5py>=3.0.0  # HDF5 file support for SciCode test data
+
+# Scientific computing (required for SciCode test execution)
+numpy>=1.20.0
+scipy>=1.7.0
+sympy>=1.9.0  # Symbolic mathematics
+
+# White agent dependencies (optional but recommended)
+litellm>=1.0.0  # LLM completion library for white agent
+

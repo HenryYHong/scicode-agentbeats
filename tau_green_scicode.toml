@@ -1,0 +1,45 @@
+name = "tau_green_scicode"
+
+description = "The assessment hosting agent for SciCode."
+
+version = "0.1.0"
+
+defaultInputModes = ["text"]
+
+defaultOutputModes = ["text"]
+
+[capabilities]
+
+streaming = false
+
+[[skills]]
+
+id = "host_assess_scicode"
+
+name = "SciCode assessment hosting"
+
+description = """
+Assess the code generation ability of an agent on SciCode problems.
+"""
+
+tags = ["green agent", "assessment hosting", "scicode"]
+
+examples = ["""    
+Your task is to evaluate a white agent on SciCode problem. The agent is located at:
+
+<white_agent_url>
+http://localhost:9002/
+</white_agent_url>
+
+You should use the following problem configuration:
+
+<scicode_problem_id>
+1
+</scicode_problem_id>
+
+Optionally, you can specify the dataset split:
+
+<split>
+validation
+</split>
+    """]
